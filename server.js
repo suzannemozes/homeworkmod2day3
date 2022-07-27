@@ -1,5 +1,7 @@
 const express = require ('express');
 require('dotenv').config();
+let responses = ["It is certain", "It is decidedly so", "Without a doubt", "Yes definitely","You may rely on it", "As I see it yes", "Most likely", "Outlook good","Yes", "Signs point to yes", "Reply hazy try again", "Ask again later","Better not tell you now", "Cannot predict now", "Concentrate and ask again","Don't count on it", "My reply is no", "My sources say no","Outlook not so good", "Very doubtful"];
+
 const app = express();
 const port = process.env.PORT || 3003;
 
@@ -28,19 +30,23 @@ app.get('/greeting/:name', (req, res) => {
 res.send("Greetings to you, " + req.params.name);
 });
 
-app.get('/tip/', (req, res) => {
-  res.render('tip', { title: 'TIP', message: 'subtotal <input> <br> total <input> <br> Tip (20%) = ', content: 'TOTAL = ' })
-})
-
 
 app.get('/tip/:total/:percentage', (req, res) => {
   let tip = req.params.total*(req.params.percentage/100)
   res.render('tip', { title: 'TIP', message: 'The subtotal is ' + req.params.total + ', and your tabulated tip is $' + tip +'.'})
 })
 
-app.get('/about-me', (req, res) => {
-  res.render('template', { title: 'Hey', message: 'Rick Ross!', content: 'The most underated Rapper in the game' })
+app.get ('/magic/:question',(req,res) => {
+  const response = responses[Math.floor(Math.random() * responses.length)]
+     
+   res.render('magic', { title: 'Magic', message: response})
 })
+
+
+// app.get('/magic/:question', (req, res) => {
+//   const response = responses[(Math.floor(Math.random() * responses.length) + 1)]
+//   res.render('magic', { title: 'Magic', message: response})
+// }
 
 app.get('/another-one', (req, res) => {
   res.render('template', { title: 'We The Best', message: 'Who!', content: 'We Taking Over, Major Key Alert, Yall know who it is, All I do is win' })
