@@ -20,7 +20,7 @@ app.set('view engine', 'hypatia') // register the hypatia view engine
 
 //our routes
 app.get('/greeting/', (req, res) => {
-  res.send("greeting");
+  res.send("Greetings!!!");
 });
 
 //add show route
@@ -28,8 +28,14 @@ app.get('/greeting/:name', (req, res) => {
 res.send("Greetings to you, " + req.params.name);
 });
 
-app.get('/tip', (req, res) => {
-  res.render('tip', { total: 'Hey', message: 'Hello there!', content: 'I am the Boss Ricky Ross' })
+app.get('/tip/', (req, res) => {
+  res.render('tip', { title: 'TIP', message: 'subtotal <input> <br> total <input> <br> Tip (20%) = ', content: 'TOTAL = ' })
+})
+
+
+app.get('/tip/:total/:percentage', (req, res) => {
+  let tip = req.params.total*(req.params.percentage/100)
+  res.render('tip', { title: 'TIP', message: 'The subtotal is ' + req.params.total + ', and your tabulated tip is $' + tip +'.'})
 })
 
 app.get('/about-me', (req, res) => {
